@@ -46,7 +46,7 @@ Toolbar toolbar;
         } else if(id == R.id.map) {
             Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
             startActivity(intent);
-            Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Map", Toast.LENGTH_LONG).show();
             return true;
         }
         return super.onOptionsItemSelected(item);

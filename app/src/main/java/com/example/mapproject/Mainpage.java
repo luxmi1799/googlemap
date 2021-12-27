@@ -3,9 +3,10 @@ package com.example.mapproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,15 +15,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class Mainpage extends AppCompatActivity {
 Toolbar toolbar;
+LinearLayout map_linear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
 
+        map_linear = findViewById(R.id.map_list);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().setBackgroundDrawable(
@@ -43,9 +49,22 @@ Toolbar toolbar;
         if(id == R.id.search) {
             Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
             return true;
-        } else if(id == R.id.map) {
-            Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
-            startActivity(intent);
+        } else if(id == R.id.map_btn) {
+            FragmentManager fragmentManager = getFragmentManager();
+            SupportMapFragment mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+          //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.map_list, mMapFragment, "TAG")
+                    .commit();
+            transaction.commit();
+
+//            fragmentTransaction.replace(R.id.map_list, asf);
+           // fragmentTransaction.commit();
+//            Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+//            startActivity(intent);
             Toast.makeText(getApplicationContext(), "Map", Toast.LENGTH_LONG).show();
             return true;
         }

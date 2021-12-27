@@ -18,11 +18,14 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 
 public class Mainpage extends AppCompatActivity {
 Toolbar toolbar;
 LinearLayout map_linear;
+private MapsActivity mapsActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,20 +54,16 @@ LinearLayout map_linear;
             return true;
         } else if(id == R.id.map_btn) {
             FragmentManager fragmentManager = getFragmentManager();
-            SupportMapFragment mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-          //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+          //  SupportMapFragment mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
+            MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+            mapsActivity = new MapsActivity();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.map_list, mMapFragment, "TAG")
                     .commit();
             transaction.commit();
-
-//            fragmentTransaction.replace(R.id.map_list, asf);
-           // fragmentTransaction.commit();
-//            Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
-//            startActivity(intent);
             Toast.makeText(getApplicationContext(), "Map", Toast.LENGTH_LONG).show();
             return true;
         }
